@@ -17,14 +17,17 @@ English transcript
    `-- MiniLM embeddings -> ChromaDB (scoped by meeting_id) -> RAG chat
 ```
 
-## What this version fixes
+## Features
 
-The project started from the [Sheryians AI School tutorial](https://www.youtube.com/watch?v=xlYJhtL0qbQ). Two weaknesses were fixed:
-
-1. **Meetings no longer mix.** Each chunk carries a stable `meeting_id`, derived from the YouTube video ID or the file's SHA-256 hash plus language. Every retrieval, count and re-index is filtered by it. Reprocessing a meeting replaces only that meeting's chunks.
-2. **Long meetings no longer break extraction.** Action items, decisions and open questions are extracted per 3,000-character chunk, merged, de-duplicated and consolidated. If consolidation fails, the merged notes are kept. Chunks that fail are reported in the app.
-
-Also included: per-chunk transcript caching so a failed run can resume, retry with backoff for rate limits, saved meetings, and Markdown export.
+- **Flexible input:** process a YouTube link or an MP3, MP4, M4A or WAV recording.
+- **Bilingual transcription:** English audio runs on local Whisper. Hindi audio is split into 25-second chunks and translated to English with Sarvam STT.
+- **Meeting summary:** Gemini and LangChain LCEL produce a map-reduce summary, so long recordings are handled in sections.
+- **Structured notes:** action items with owner and due date, decisions, and open questions are extracted from each 3,000-character section, then merged, de-duplicated and consolidated.
+- **Grounded chat:** a ChromaDB RAG chatbot answers from the selected meeting's transcript and says so when something was not discussed.
+- **Meeting isolation:** every chunk carries a stable `meeting_id`, based on the YouTube video ID or the file's SHA-256 hash plus language. Search, counts and re-indexing are all filtered by it, so one meeting never leaks into another.
+- **Reliable long runs:** transcripts are cached per audio chunk so a failed run can resume. Rate limits and network errors are retried with backoff, and any skipped section is reported in the app.
+- **Saved work:** meetings are stored locally, can be reopened from the sidebar, and can be exported as Markdown.
+- **Observability:** each step and its duration appear in the app, the terminal and a rotating log file.
 
 ## Setup on Windows
 
@@ -85,3 +88,7 @@ python -m pytest
 ```
 
 The tests use real FFmpeg and ChromaDB, and fake only paid or downloaded services (speech models, Gemini, embeddings).
+
+## Acknowledgement
+
+I learned the core speech-to-RAG workflow from this [Sheryians AI School video](https://www.youtube.com/watch?v=xlYJhtL0qbQ).
