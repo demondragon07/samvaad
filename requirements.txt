@@ -1,0 +1,15 @@
+streamlit>=1.50,<2
+python-dotenv>=1.0,<2
+requests>=2.32,<3
+pydantic>=2.7,<3
+yt-dlp>=2025.1.1
+openai-whisper>=20240930
+torch>=2.2
+langchain-core>=1.0,<2
+langchain-text-splitters>=1.0,<2
+langchain-google-genai>=4.4,<5
+langchain-chroma>=1.0,<2
+langchain-huggingface>=1.0,<2
+sentence-transformers>=3.0
+chromadb>=1.0,<2
+pytest>=8.0
