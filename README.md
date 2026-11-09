@@ -89,6 +89,3 @@ python -m pytest
 
 The tests use real FFmpeg and ChromaDB, and fake only paid or downloaded services (speech models, Gemini, embeddings).
 
-## Acknowledgement
-
-I learned the core speech-to-RAG workflow from this [Sheryians AI School video](https://www.youtube.com/watch?v=xlYJhtL0qbQ).
